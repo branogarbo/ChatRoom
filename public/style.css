@@ -1,0 +1,41 @@
+body {
+   display: grid;
+   place-content: center;
+}
+
+* {
+   font-family: 'Roboto', sans-serif;
+}
+
+#cont {
+   display: flex;
+   flex-direction: column;
+   width: 75vw;
+   height: 75vh;
+}
+
+#cont > * {
+   margin-bottom: 0.5rem;
+   padding: 0.5rem;
+}
+
+#header {
+   padding-left: 0;
+}
+
+#chat {
+   flex-grow: 1;
+   border: 1px solid grey;
+   overflow-y: scroll;
+   padding-top: 1rem;
+}
+
+#chat > * {
+   padding-bottom: 1.5rem;
+   word-wrap: break-word;
+}
+
+#chat hr {
+   border: 1px solid grey;
+   margin-top: 1rem;
+}

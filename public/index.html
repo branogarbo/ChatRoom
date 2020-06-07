@@ -1,8 +1,20 @@
 <html>
    <head>
-      <title>WebSocket Stuff</title>
+      <title>Chat Room</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="./style.css">
    </head>
    <body>
-      <h1>look in da console</h1>
+
+      <div id="cont">
+         <h1 id="header">Chat Room</h1>
+         <div id="chat"></div>
+         <input id="name" type="text" placeholder="name">
+         <textarea id="message" placeholder="message"></textarea>
+         <button id="sendButton">Send</button>
+      </div>
+
+      <script src="./script.js"></script>
    </body> 
 </html>
