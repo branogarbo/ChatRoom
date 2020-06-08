@@ -30,14 +30,14 @@ socket.on('chat', data=>{
    qs('#typingMsg').innerHTML = "";
 });
 
-let interval = null;
+let forgetIntrvl = null;
 
 socket.on('typing', data=>{
    qs('#typingMsg').innerHTML = `${data} is typing...`;
 
-   clearTimeout(interval);
+   clearTimeout(forgetIntrvl);
 
-   interval = setTimeout(()=>{
+   forgetIntrvl = setTimeout(()=>{
       qs('#typingMsg').innerHTML = "";
    },1000);
 
