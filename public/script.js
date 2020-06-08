@@ -13,15 +13,35 @@ qs('#sendButton').onclick = () => {
    qs('#message').value = "";
 };
 
+qs('#message').onkeydown = () => {
+   socket.emit('typing', qs('#name').value);
+};
+
 socket.on('chat', data=>{
-   qs('#chat').insertAdjacentHTML('beforeend', `
-      <div>
-         <div><b>${data.name}:</b> ${data.message}</div>
-         <hr />
-      </div>
+   qs('#main').insertAdjacentHTML('beforeend', `
+      <div><b>${data.name}:</b> ${data.message}</div>
+      <hr />
    `);
 
-   qs('#chat > div:last-of-type').scrollIntoView({
+   qs('#main > div:last-of-type').scrollIntoView({
+      behavior: 'smooth'
+   });
+
+   qs('#typingMsg').innerHTML = "";
+});
+
+let interval = null;
+
+socket.on('typing', data=>{
+   qs('#typingMsg').innerHTML = `${data} is typing...`;
+
+   clearTimeout(interval);
+
+   interval = setTimeout(()=>{
+      qs('#typingMsg').innerHTML = "";
+   },1000);
+
+   qs('#typingMsg').scrollIntoView({
       behavior: 'smooth'
    });
 });
