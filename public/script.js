@@ -2,9 +2,7 @@ let socket = io();
 
 let qs = sel => document.querySelector(sel);
 
-// emit events
-
-qs('#sendButton').onclick = () => {
+let emitData = () => {
    socket.emit('chat', {
       name: qs('#name').value,
       message: qs('#message').value
@@ -13,7 +11,12 @@ qs('#sendButton').onclick = () => {
    qs('#message').value = "";
 };
 
-qs('#message').onkeydown = () => {
+qs('#sendButton').onclick = () => {
+   emitData();
+};
+
+qs('#message').onkeydown = event => {
+   event.key == "Enter" ? emitData() : {};
    socket.emit('typing', qs('#name').value);
 };
 
