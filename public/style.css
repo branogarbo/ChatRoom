@@ -1,3 +1,9 @@
+@media only screen and (max-aspect-ratio: 1 / 1) {
+   * {
+      font-size: 1.4em;
+   }
+}
+
 body {
    display: grid;
    place-content: center;
@@ -10,8 +16,8 @@ body {
 #cont {
    display: flex;
    flex-direction: column;
-   width: 75vw;
-   height: 75vh;
+   width: 95vw;
+   height: 95vh;
 }
 
 #cont > * {
@@ -21,6 +27,7 @@ body {
 
 #header {
    padding-left: 0;
+   margin-top: 0;
 }
 
 #chat {
