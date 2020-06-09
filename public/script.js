@@ -1,50 +1,69 @@
 let socket = io();
+let forgetIntrvl = null;
 
 let qs = sel => document.querySelector(sel);
 
+let messageInp = qs('#message');
+let nameInp = qs('#name');
+let sendBttn = qs('#sendButton');
+let messageBox = qs('#messageBox');
+let typingMsg = qs('#typingMsg');
+
 let emitData = () => {
    socket.emit('chat', {
-      name: qs('#name').value,
-      message: qs('#message').value
+      name: nameInp.value,
+      message: messageInp.value
    });
 
-   qs('#message').value = "";
+   messageInp.value = "";
 };
 
-qs('#sendButton').onclick = () => {
+////////////////// DOM Events ///////////////////
+
+sendBttn.onclick = () => {
    emitData();
 };
 
-qs('#message').onkeydown = event => {
-   event.key == "Enter" ? emitData() : {};
-   socket.emit('typing', qs('#name').value);
+messageInp.onkeydown = event => {
+   event.key == "Enter" ? emitData() : socket.emit('typing', nameInp.value);
 };
 
-socket.on('chat', data=>{
-   qs('#main').insertAdjacentHTML('beforeend', `
-      <div><b>${data.name}:</b> ${data.message}</div>
-      <hr />
-   `);
+nameInp.onkeydown = event => {
+   event.key == "Enter" ? messageInp.focus() : {};
+};
 
-   qs('#main > div:last-of-type').scrollIntoView({
+nameInp.onblur = () => {
+   nameInp.value ? nameInp.disabled = true : {}
+}
+
+////////////////// WebSocket Events ///////////////////
+
+socket.on('chat', ({ name, message })=>{
+   typingMsg.innerHTML = "";
+   
+   messageBox.insertAdjacentHTML('beforeend', `
+      <div class="headCont">
+         <b class="name">${name}:</b>
+      </div>
+      <div class="message">${message}</div>
+      <hr />
+   `); // add timestamp maybe?
+   
+   qs('#messageBox > div:last-of-type').scrollIntoView({
       behavior: 'smooth'
    });
-
-   qs('#typingMsg').innerHTML = "";
 });
 
-let forgetIntrvl = null;
-
-socket.on('typing', data=>{
-   qs('#typingMsg').innerHTML = `${data} is typing...`;
-
+socket.on('typing', name =>{
+   typingMsg.innerHTML = `${name} is typing...`;
+   
    clearTimeout(forgetIntrvl);
-
+   
    forgetIntrvl = setTimeout(()=>{
-      qs('#typingMsg').innerHTML = "";
+      typingMsg.innerHTML = "";
    },1000);
-
-   qs('#typingMsg').scrollIntoView({
+   
+   typingMsg.scrollIntoView({
       behavior: 'smooth'
    });
 });

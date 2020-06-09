@@ -12,14 +12,14 @@ app.use(express.static(path.join(__dirname,'public')));
 
 let io = socket(server);
 
-io.on('connection', socket=>{
+io.on('connection', socket =>{
    console.log('made socket connection. socket id:',socket.id);
 
-   socket.on('chat', data=>{
-      io.sockets.emit('chat', data);
+   socket.on('chat', msgData =>{
+      io.sockets.emit('chat', msgData);
    });
 
-   socket.on('typing', data=>{
-      socket.broadcast.emit('typing', data);
+   socket.on('typing', name =>{
+      socket.broadcast.emit('typing', name);
    });
 });

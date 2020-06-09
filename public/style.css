@@ -35,6 +35,14 @@ body {
    word-wrap: break-word;
 }
 
-#main hr {
+#messageBox hr {
    border: 1px solid grey;
+}
+
+#messageBox .headCont {
+   width: 100%;
+}
+
+#messageBox .message {
+   margin-top: 0.25rem;
 }
