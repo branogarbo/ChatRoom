@@ -10,6 +10,8 @@ let messageBox = qs('#messageBox');
 let typingMsg = qs('#typingMsg');
 
 let emitData = () => {
+   if (!nameInp.value.trim() || !messageInp.value.trim()) return;
+
    socket.emit('chat', {
       name: nameInp.value,
       message: messageInp.value
@@ -33,7 +35,7 @@ nameInp.onkeydown = event => {
 };
 
 nameInp.onblur = () => {
-   nameInp.value ? nameInp.disabled = true : {}
+   nameInp.value.trim() ? nameInp.disabled = true : {}
 }
 
 ////////////////// WebSocket Events ///////////////////
